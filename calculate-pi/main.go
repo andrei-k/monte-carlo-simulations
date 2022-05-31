@@ -29,9 +29,19 @@ func calcPi(samples int) float64 {
 }
 
 // Calculate Pi using concurrent goroutines
+// Note that I'm calling a separate function as a goroutine in order to benchmark running sequential vs concurrent calculations
 func calcPiConcurrent(samples int, ch chan Channel) {
 	// Send result to channel
 	ch <- Channel{samples, calcPi(samples)}
+}
+
+// Render result to console
+func displayOutput(samples int, result float64) {
+	fmt.Print("Samples: ", samples)
+	// Adjust spaces for formatting
+	spaces := 12 - int(math.Log10(float64(samples)))
+	fmt.Printf("%s", strings.Repeat(" ", spaces))
+	fmt.Println("Pi:", result)
 }
 
 // A struct for the channel to hold 2 values
@@ -45,24 +55,19 @@ func main() {
 	var samples float64
 	ch := make(chan Channel, threads)
 
+	fmt.Println("---------------------------------------------")
+	fmt.Println("----------- Running concurrently ----------- ")
+	fmt.Println("---------------------------------------------")
+
 	for i := 1; i <= threads; i++ {
 		// Start with 10 samples and go up to 100,000,000
 		samples = math.Pow(10, float64(i))
 		go calcPiConcurrent(int(samples), ch)
 	}
 
-	fmt.Println("---------------------------------------------")
-	fmt.Println("----------- Running concurrently ----------- ")
-	fmt.Println("---------------------------------------------")
-
 	for i := 0; i < threads; i++ {
 		output := <-ch // Receive result from channel
-		// TODO: render output as a function
-
-		fmt.Print("Samples: ", output.samples)
-		// Adjust spaces for formatting
-		fmt.Printf("%s", strings.Repeat(" ", 12-int(math.Log10(float64(output.samples)))))
-		fmt.Println("Pi:", output.result)
+		displayOutput(output.samples, output.result)
 	}
 
 	fmt.Println("---------------------------------------------")
@@ -72,11 +77,6 @@ func main() {
 	for i := 1; i <= threads; i++ {
 		// Start with 10 samples and go up to 100,000,000
 		samples = math.Pow(10, float64(i))
-		// TODO: render output as a function
-
-		fmt.Print("Samples: ", int(samples))
-		// Adjust spaces for formatting
-		fmt.Printf("%s", strings.Repeat(" ", 12-i))
-		fmt.Println("Pi:", calcPi(int(samples)))
+		displayOutput(int(samples), calcPi(int(samples)))
 	}
 }
