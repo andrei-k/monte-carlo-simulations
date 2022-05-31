@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -31,28 +30,14 @@ func calcPi(samples int) float64 {
 
 // Calculate Pi using concurrent goroutines
 func calcPiConcurrent(samples int, ch chan Channel) {
-	// TODO: do this calculation by calling the function above
-	var inside int = 0
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-	for i := 0; i < samples; i++ {
-		x, y := r.Float64(), r.Float64()
-		if (x*x + y*y) < 1 {
-			inside++
-		}
-	}
-	ratio := float64(inside) / float64(samples)
-	ch <- Channel{samples, ratio * 4} // Send result to channel
+	// Send result to channel
+	ch <- Channel{samples, calcPi(samples)}
 }
 
-// A struct for the channel holding 2 values
+// A struct for the channel to hold 2 values
 type Channel struct {
 	samples int
 	result  float64
-}
-
-func init() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
 func main() {
