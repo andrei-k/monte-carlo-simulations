@@ -1,6 +1,6 @@
 # Normal Distribution Simulation
 
-Go program running the example outlined in this article: https://machinelearningmastery.com/monte-carlo-sampling-for-probability/  
+Go program running the example outlined in this [article](https://machinelearningmastery.com/monte-carlo-sampling-for-probability/)  
 
 We will use a Gaussian distribution with a mean of 50 and a standard deviation of 5 and draw random samples from this distribution.
 
@@ -12,3 +12,10 @@ We can see that the small sample sizes of 10 and 50 do not effectively capture t
 
 This highlights the need to draw many samples, even for a simple random variable, and the benefit of increased accuracy of the approximation with the number of samples drawn.
 
+## Usage
+
+Run in Terminal
+
+```go
+go run .
+```

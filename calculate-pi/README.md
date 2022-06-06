@@ -11,5 +11,5 @@ The `GOMAXPROCS` no longer needs to be explicitly set to use all available CPUs,
 Run in Terminal
 
 ```go
-go run .     
+go run .
 ```
