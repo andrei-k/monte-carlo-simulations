@@ -1,6 +1,6 @@
 # Normal Distribution Simulation
 
-Go program running the example outlined in this [article](https://machinelearningmastery.com/monte-carlo-sampling-for-probability/)  
+Go program running the example outlined in this [article](https://machinelearningmastery.com/monte-carlo-sampling-for-probability/).  
 
 We will use a Gaussian distribution with a mean of 50 and a standard deviation of 5 and draw random samples from this distribution.
 
