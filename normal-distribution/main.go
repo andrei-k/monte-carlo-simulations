@@ -1,7 +1,10 @@
 package main
 
 import (
+	"math"
 	"math/rand"
+	"strconv"
+	"sync"
 	"time"
 
 	"gonum.org/v1/plot"
@@ -9,9 +12,24 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func HistPlot(values plotter.Values) {
-	p := plot.New()
+func histPlot(samples int) {
+	// Note that rand.NormFloat64() uses a shared global object with a Mutex lock on it. Therefore, it shouldn't be used in the main goroutine. Instead, allow each CPU to generate random values inside the goroutine.
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	var values plotter.Values
+	var p *plot.Plot = plot.New()
 	p.Title.Text = "Histogram Plot"
+
+	// Generate a normally distributed float64
+	var randValue float64
+
+	// Create a slice of random normally distributed values
+	for i := 0; i < samples; i++ {
+		// Use a mean of 50 and a standard deviation of 5
+		// NormFloat64()*desiredStdDev + desiredMean
+		randValue = r.NormFloat64()*5 + 50
+		values = append(values, randValue)
+	}
 
 	hist, err := plotter.NewHist(values, 30)
 	if err != nil {
@@ -19,26 +37,27 @@ func HistPlot(values plotter.Values) {
 	}
 	p.Add(hist)
 
-	err = p.Save(5*vg.Inch, 5*vg.Inch, "histogram.png")
+	fileName := "histogram_plot_" + strconv.Itoa(samples) + ".png"
+	err = p.Save(5*vg.Inch, 5*vg.Inch, fileName)
 	if err != nil {
 		panic(err)
 	}
+
+	wg.Done()
 }
 
+var wg sync.WaitGroup
+
 func main() {
-	rand.Seed(time.Now().UnixNano())
-	var values plotter.Values
+	repeat := 5
+	var samples float64
 
-	// Generate a normally distributed float64
-	// sample = NormFloat64()*desiredStdDev + desiredMean
-	var sample float64
-
-	// Create a slice of 100,000 random normally distributed samples
-	for i := 0; i < 100000; i++ {
-		// Use a mean of 50 and a standard deviation of 5
-		sample = rand.NormFloat64()*5 + 50
-		values = append(values, sample)
+	for i := 1; i <= repeat; i++ {
+		// Start with 10 samples and go up to 100,000
+		samples = math.Pow(10, float64(i))
+		go histPlot(int(samples))
+		wg.Add(1)
 	}
 
-	HistPlot(values)
+	wg.Wait()
 }
