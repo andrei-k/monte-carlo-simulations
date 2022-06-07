@@ -8,7 +8,7 @@ Let’s pretend we don’t know the form of the probability distribution for thi
 
 To make the example more interesting, we will repeat this experiment five times with different sized samples, starting with 10 samples and going up to 100,000. We would expect that as the size of the sample is increased, the probability density will better approximate the true density of the target function, given the law of large numbers.
 
-We can see that the small sample sizes of 10 and 100 do not effectively capture the density of the target function. We can see that 1000 samples is better, but it is not until 10,000 samples that we clearly see the familiar bell-shape of the Gaussian probability distribution.
+We can see that the small sample sizes of 10 does not effectively capture the density of the target function. We can see that 100 samples is better, but it is not until 1,000 samples that we clearly see the familiar bell-shape of the Gaussian probability distribution.
 
 This highlights the need to draw many samples, even for a simple random variable, and the benefit of increased accuracy of the approximation with the number of samples drawn.
 
