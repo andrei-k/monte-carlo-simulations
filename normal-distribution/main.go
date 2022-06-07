@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"strconv"
@@ -18,7 +19,7 @@ func histPlot(samples int) {
 
 	var values plotter.Values
 	var p *plot.Plot = plot.New()
-	p.Title.Text = "Histogram Plot"
+	p.Title.Text = fmt.Sprintf("%d samples", samples)
 
 	// Generate a normally distributed float64
 	var randValue float64
