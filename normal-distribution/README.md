@@ -19,3 +19,15 @@ Run in Terminal
 ```go
 go run .
 ```
+
+## Output example
+
+![histogram_plot_10](https://user-images.githubusercontent.com/4069600/172282328-84c85ed3-d2cd-43cb-b14f-d9661834b267.png)
+
+![histogram_plot_100](https://user-images.githubusercontent.com/4069600/172282351-4df338e4-2196-4dbc-aa2f-e10cfc36d364.png)
+
+![histogram_plot_1000](https://user-images.githubusercontent.com/4069600/172282352-32baa123-2187-4bf1-a14f-099e7572776c.png)
+
+![histogram_plot_10000](https://user-images.githubusercontent.com/4069600/172282354-7cf2ba0d-00a2-432d-9254-af1fa4e1b207.png)
+
+![histogram_plot_100000](https://user-images.githubusercontent.com/4069600/172282355-e7baa080-5a18-4081-9323-bc35afe152bd.png)
