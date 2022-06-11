@@ -47,11 +47,13 @@ func calcPiConcurrent(samples int) float64 {
 	for i := 0; i < cpus; i++ {
 		go func() {
 			inside := checkInsideCircle(threadSamples)
+			// Send result to the channel
 			results <- float64(inside) / float64(threadSamples) * 4
 		}()
 	}
 
 	var total float64
+	// Receive the results from each goroutine
 	for i := 0; i < cpus; i++ {
 		total += <-results
 	}
