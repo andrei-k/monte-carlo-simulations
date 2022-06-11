@@ -12,4 +12,5 @@ Run in Terminal
 
 ```go
 go run .
+go test -bench=.
 ```
