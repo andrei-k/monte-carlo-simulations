@@ -74,7 +74,8 @@ func histPlot(samples int) {
 	}
 }
 
-func runConcurrent() {
+// runSequential generates histogram plots without concurrency.
+func runSequential() {
 	repeat := 5
 	var samples float64
 
@@ -85,7 +86,8 @@ func runConcurrent() {
 	}
 }
 
-func runSequential() {
+// runConcurrent generates histogram plots using goroutines.
+func runConcurrent() {
 	repeat := 5
 	var samples float64
 
