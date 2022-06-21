@@ -12,38 +12,6 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func histPlotSequential(samples int) {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-	var values plotter.Values
-	var p *plot.Plot = plot.New()
-	p.Title.Text = fmt.Sprintf("%d samples", samples)
-
-	// Holds a normally distributed float64.
-	var randValue float64
-
-	// Creates a slice of random normally distributed values.
-	for i := 0; i < samples; i++ {
-		// Uses a mean of 50 and a standard deviation of 5.
-		randValue = r.NormFloat64()*5 + 50
-		values = append(values, randValue)
-	}
-
-	hist, err := plotter.NewHist(values, 30)
-	if err != nil {
-		panic(err)
-	}
-	p.Add(hist)
-
-	fileName := "histogram_plot_" + strconv.Itoa(samples) + ".png"
-	err = p.Save(5*vg.Inch, 5*vg.Inch, fileName)
-	if err != nil {
-		panic(err)
-	}
-
-	// wg.Done()
-}
-
 // histPlot creates a histogram plot with the given number of samples.
 func histPlot(samples int) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -112,6 +80,6 @@ func runConcurrent() {
 }
 
 func main() {
-	// runConcurrent()
-	runSequential()
+	runConcurrent()
+	// runSequential()
 }
